@@ -65,8 +65,9 @@ namespace AsteroidGame
         public static void Draw()
         {
             var g = __Buffer.Graphics;
-            //g.Clear(Color.Black);
+            g.Clear(Color.Black);
 
+            // change backgroup images 
             var indexbackimage = DateTime.Now.Second % lisimage.Count;
             var BackgroundImage = lisimage[indexbackimage];
             g.DrawImage(BackgroundImage, new Point(0, 0));
