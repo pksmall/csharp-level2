@@ -46,6 +46,7 @@ namespace AsteroidGame
         }
 
         private static VisualObject[] __GameObjects;
+
         public static void Load()
         {
             __GameObjects = new VisualObject[30];
@@ -60,6 +61,9 @@ namespace AsteroidGame
                     new Point(600, i * 20),
                     new Point(- i, 0),
                     20);
+
+            Image image = Properties.Resources.Asteroid;
+            var image_object = new ImageObject(new Point(0, 5), new Point(5, 6), new Size(70, 70), image);
         }
 
         public static void Draw()

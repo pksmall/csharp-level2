@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AsteroidGame
 {
-    class VisualObject
+    public class VisualObject
     {
         protected Point _Position;
         protected Point _Direction;
