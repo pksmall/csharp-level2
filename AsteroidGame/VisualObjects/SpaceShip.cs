@@ -14,5 +14,10 @@ namespace AsteroidGame.VisualObjects
         {
             throw new NotImplementedException();
         }
+
+        public override void Update()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

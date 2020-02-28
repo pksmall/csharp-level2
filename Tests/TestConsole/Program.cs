@@ -119,7 +119,7 @@ namespace TestConsole
                 //return StringComparer.OrdinalIgnoreCase.Compare(Name, other_Student.Name);
                 if (Height > other_Student.Height)
                 {
-                    return +1
+                    return +1;
                 } else if (Height.Equals(other_Student.Height))
                 {
                     return 0;
