@@ -2,10 +2,10 @@
 
 namespace AsteroidGame.VisualObjects
 {
-    class ImageObject : VisualObject
+    public abstract class ImageObject : VisualObject
     {
         private Image _image;
-        public ImageObject(Point Position, Point Direction, Size Size, Image image) : base(Position, Direction, Size)
+        protected ImageObject(Point Position, Point Direction, Size Size, Image image) : base(Position, Direction, Size)
         {
             _image = image;
         }

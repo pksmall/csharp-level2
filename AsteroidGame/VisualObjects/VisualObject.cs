@@ -2,7 +2,7 @@
 
 namespace AsteroidGame.VisualObjects
 {
-    abstract class VisualObject
+    public abstract class VisualObject
     {
         protected Point _Position;
         protected Point _Direction;
