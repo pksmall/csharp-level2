@@ -1,7 +1,9 @@
-﻿using System;
+﻿using AsteroidGame.VisualObjects;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using AsteroidGame.VisualObjects;
 
 namespace AsteroidGame
 {
@@ -49,21 +51,32 @@ namespace AsteroidGame
 
         public static void Load()
         {
-            __GameObjects = new VisualObject[30];
-            for (var i = 0; i < __GameObjects.Length / 2; i++)
-                __GameObjects[i] = new VisualObject(
+            var game_objects = new List<VisualObject>();
+            var rnd = new Random();
+
+            const int stars_count = 150;
+            const int star_size = 5;
+            const int star_max_speed = 20;
+            for (var i = 0; i < stars_count; i++)
+                game_objects.Add(new Star(
+                    new Point(rnd.Next(0, Width),rnd.Next(0, Height)),
+                    new Point(-rnd.Next(0, star_max_speed), 0),
+                    star_size));
+
+            const int ellipses_count = 20;
+            const int ellipses_size_x = 20;
+            const int ellipses_size_y = 30;
+            for (var i = 0; i < ellipses_count; i++)
+                game_objects.Add(new EllipseObject(
                     new Point(600, i * 20),
                     new Point(15 - i, 20 - i),
-                    new Size(20, 20));
+                    new Size(ellipses_size_x, ellipses_size_y)));
 
-            for (var i = __GameObjects.Length / 2; i < __GameObjects.Length; i++)
-                __GameObjects[i] = new Star(
-                    new Point(600, i * 20),
-                    new Point(- i, 0),
-                    20);
+ 
+            /*Image image = Properties.Resources.Asteroid;
+            var image_object = new ImageObject(new Point(0, 5), new Point(5, 6), new Size(70, 70), image);*/
 
-            Image image = Properties.Resources.Asteroid;
-            var image_object = new ImageObject(new Point(0, 5), new Point(5, 6), new Size(70, 70), image);
+            __GameObjects = game_objects.ToArray();
         }
 
         public static void Draw()
