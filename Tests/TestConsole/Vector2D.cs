@@ -4,12 +4,12 @@ namespace TestConsole
 {
     struct Vector2D
     {
-        private double _X;
+        private readonly double _X;
         //private double _Y;
 
-        public double X { get { return _X; } set { _X = value; } }
+        public double X { get { return _X; }}
         //public double Y { get => _Y; set => _Y = value; }
-        public double Y { get; /*private*/ set; }
+        public double Y { get; }
 
         public double Length => Math.Sqrt(X * X + Y * Y);
 
