@@ -12,11 +12,6 @@ namespace AsteroidGame.VisualObjects
         {
         }
 
-        public bool CheckCollision(ICollision obj)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override void Draw(Graphics g)
         {
             var rect = Rect;
