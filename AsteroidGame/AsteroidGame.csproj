@@ -88,10 +88,12 @@
     <Compile Include="Game.cs" />
     <Compile Include="VisualObjects\Asteroid.cs" />
     <Compile Include="VisualObjects\Bullet.cs" />
+    <Compile Include="VisualObjects\CollisionObject.cs" />
     <Compile Include="VisualObjects\EllipseObject.cs" />
     <Compile Include="VisualObjects\ImageObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VisualObjects\Interfaces\ICollision.cs" />
     <Compile Include="VisualObjects\SpaceShip.cs" />
     <Compile Include="VisualObjects\Star.cs" />
     <Compile Include="VisualObjects\VisualObject.cs" />
