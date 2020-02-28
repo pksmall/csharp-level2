@@ -51,6 +51,7 @@ namespace AsteroidGame
         }
 
         private static VisualObject[] __GameObjects;
+        private static Bullet __Bullet;
 
         public static void Load()
         {
@@ -88,6 +89,7 @@ namespace AsteroidGame
             var image_object = new ImageObject(new Point(0, 5), new Point(5, 6), new Size(70, 70), image);*/
 
             __GameObjects = game_objects.ToArray();
+            __Bullet = new Bullet(200);
         }
 
         public static void Draw()
@@ -107,6 +109,8 @@ namespace AsteroidGame
             foreach (var visual_object in __GameObjects)
                 visual_object.Draw(g);
 
+            __Bullet.Draw(g);
+
             __Buffer.Render();
         }
 
@@ -114,8 +118,12 @@ namespace AsteroidGame
         {
             foreach (var visual_object in __GameObjects)
                 visual_object.Update();
+
+            __Bullet.Update();
+            if (__Bullet.Position.X > Width)
+            {
+                __Bullet = new Bullet(300);
+            }
         }
-
-
     }
 }
