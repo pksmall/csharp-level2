@@ -58,11 +58,11 @@ namespace TestConsole
 
         public void SubscribeToAdd(Action<TItem> Obserber)
         {
-            _addObservers = Obserber;
+            _addObservers += Obserber;
         }
         public void SubscribeToRemove(Action<TItem> Obserber)
         {
-            _removeObservers = Obserber;
+            _removeObservers += Obserber;
         }
     }
 
