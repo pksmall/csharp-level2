@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Collections;
 
 namespace TestConsole
 {
-    abstract class Storage<TItem>
+    abstract class Storage<TItem> : IEnumerable<TItem>
     {
         protected readonly List<TItem> _items = new List<TItem>();
         public void Add(TItem item)
@@ -37,6 +38,16 @@ namespace TestConsole
         {
             Clear();
         }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public IEnumerator<TItem> GetEnumerator()
+        {
+            for(var i = 0; i < _items.Count; i++)
+            {
+                yield return _items[i];
+            }
+        }
     }
 
     class Dekanat : Storage<Student>
@@ -60,6 +71,7 @@ namespace TestConsole
                     {
                         Name = data_elements[0],
                     };
+
                     if (data_elements.Length > 1)
                     {
                         var ratings = new List<int>();
@@ -67,6 +79,7 @@ namespace TestConsole
                         {
                             ratings.Add(int.Parse(data_elements[i]));
                         }
+                        student.Ratings = ratings;
                     }
                     Add(student);
                 }

@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Employeer.cs" />
+    <Compile Include="Extensions\RandomExtension.cs" />
     <Compile Include="FixedEmployee.cs" />
     <Compile Include="Gamer.cs" />
     <Compile Include="IClonebale.cs" />

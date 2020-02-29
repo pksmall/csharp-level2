@@ -15,6 +15,14 @@ namespace TestConsole
         {
             get
             {
+                //return Ratings.Average();
+                return Ratings.Sum() / (double)Ratings.Count;
+            }
+        }
+/*        public double AvgRating
+        {
+            get
+            {
                 var ratings = Ratings;
                 if (ratings == null)
                 {
@@ -33,7 +41,7 @@ namespace TestConsole
                 return sum / (double)ratings.Count;
             }
         }
-
+*/
         public object Clone()
         {
             return new Student
