@@ -21,6 +21,10 @@ namespace AsteroidGame
 
         private static List<Bitmap> lisimage = new List<Bitmap>();
 
+        private const int asteroids_count = 25;
+        private const int asteroids_size = 40;
+        private const int asteroids_max_speed = 10;
+
         //static Game()
         //{
 
@@ -38,6 +42,8 @@ namespace AsteroidGame
             lisimage.Add(Properties.Resources.im1);
             lisimage.Add(Properties.Resources.im2);
             lisimage.Add(Properties.Resources.im3);
+
+            MessageBox.Show($"{Width} x {Height}", "WxH", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             var timer = new Timer { Interval = __FrameTimeOut };
             timer.Tick += OnTimerTick;
@@ -76,13 +82,10 @@ namespace AsteroidGame
                     new Point(15 - i, 20 - i),
                     new Size(ellipses_size_x, ellipses_size_y)));
 
-            const int asteroids_count = 10;
-            const int asteroids_size = 25;
-            const int asteroids_max_speed = 20;
             for (var i = 0; i < asteroids_count; i++)
                 game_objects.Add(new Asteroid(
                     new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
-                    new Point(-rnd.Next(0, asteroids_max_speed), 0),
+                    new Point(-rnd.Next(1, asteroids_max_speed), 0),
                     asteroids_size));
 
             /*Image image = Properties.Resources.Asteroid;
@@ -117,6 +120,19 @@ namespace AsteroidGame
         public static void Update()
         {
 
+            const int max_width = 1000;
+            const int max_height = 1000;
+            const int min_width = 136;
+            const int min_heigth = 39;
+            try
+            {
+                if (Width > max_width || Width <= min_width || Height > max_height || Height <= min_heigth)
+                {
+                    throw new ArgumentOutOfRangeException($"Width and/or Height out of range. {Width}x{Height}");
+                }
+            }
+            finally { }
+
             foreach (var visual_object in __GameObjects)
                 visual_object?.Update();
 
@@ -126,6 +142,7 @@ namespace AsteroidGame
                 __Bullet = new Bullet(new Random().Next(Width));
             }
 
+            var rnd = new Random();
             for(var i = 0; i < __GameObjects.Length; i++)
             {
                 var obj = __GameObjects[i];
@@ -136,7 +153,11 @@ namespace AsteroidGame
                     if (__Bullet.CheckCollision(collision_object))
                     {
                         __Bullet = new Bullet(new Random().Next(Width));
-                        __GameObjects[i] = null;
+                        __GameObjects[i] = new Asteroid(
+                                               new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
+                                               new Point(-rnd.Next(1, asteroids_max_speed), 0),
+                                               asteroids_size);
+
                         MessageBox.Show("Astroid has been destroyed.", "Collision", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
                 }
