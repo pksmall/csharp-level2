@@ -10,6 +10,8 @@ namespace TestConsole
 {
     abstract class Storage<TItem> : IEnumerable<TItem>
     {
+        public event Action<TItem> NewItemAdded;
+
         protected readonly List<TItem> _items = new List<TItem>();
         protected Action<TItem> _addObservers;
         protected Action<TItem> _removeObservers;
@@ -19,6 +21,8 @@ namespace TestConsole
             if (_items.Contains(item)) return;
             _items.Add(item);
             _addObservers?.Invoke(item);
+
+            NewItemAdded?.Invoke(item);
         }
 
         public bool Remove(TItem item)
@@ -68,6 +72,19 @@ namespace TestConsole
 
     class Dekanat : Storage<Student>
     {
+        public event Action<Student> ExelentStudentAdded;
+        public Dekanat()
+        {
+            NewItemAdded += OnNewItemAdded;
+        }
+        private void OnNewItemAdded(Student student)
+        {
+            if (student.AvgRating > 7)
+            {
+                ExelentStudentAdded?.Invoke(student);
+            }
+        }
+
         public override void LoadFromFile(string fileName)
         {
             if (!File.Exists(fileName)) throw new FileNotFoundException("File not exists!", fileName);

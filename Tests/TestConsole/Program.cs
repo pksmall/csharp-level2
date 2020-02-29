@@ -38,9 +38,13 @@ namespace TestConsole
         static void Main(string[] args)
         {
             var dekanat = new Dekanat();
-            dekanat.SubscribeToAdd(OnStudentAdd);
+            //dekanat.SubscribeToAdd(OnStudentAdd);
             dekanat.SubscribeToRemove(OnStudentRemove);
             dekanat.SubscribeToRemove(GoToArmy);
+            //dekanat.SubscribeToAdd(std => Console.WriteLine("Congratulations again to the student.")); 
+            
+            dekanat.NewItemAdded += OnStudentAdd;
+            dekanat.ExelentStudentAdded += exelent_student => Console.WriteLine("!!! {0} !!!", exelent_student); ;
 
             var rnd = new Random();
             for (var i = 0; i < 100; i++)
@@ -65,7 +69,7 @@ namespace TestConsole
 
             foreach (var std in dekanat2)
             {
-                Console.WriteLine(std);
+                //Console.WriteLine(std);
             }
 
             var avg_rating = dekanat2.Average(s => s.AvgRating);
