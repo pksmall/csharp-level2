@@ -22,9 +22,25 @@ namespace TestConsole
             return result;
         }
 
+        private static void OnStudentAdd(Student student)
+        {
+            Console.WriteLine("Student {0} added", student.Name);
+        }
+        private static void OnStudentRemove(Student student)
+        {
+            Console.WriteLine("Student {0} removed", student.Name);
+        }
+
+        private static void GoToArmy(Student student)
+        {
+            Console.WriteLine("Student {0} go to the army", student.Name);
+        }
         static void Main(string[] args)
         {
             var dekanat = new Dekanat();
+            dekanat.SubscribeToAdd(OnStudentAdd);
+            dekanat.SubscribeToRemove(OnStudentRemove);
+            dekanat.SubscribeToRemove(GoToArmy);
 
             var rnd = new Random();
             for (var i = 0; i < 100; i++)
@@ -38,6 +54,11 @@ namespace TestConsole
 
             const string students_data_file = "student.csv";
             dekanat.SaveToFile(students_data_file);
+
+            Console.ReadKey();
+
+            var student_remove = dekanat.Skip(45).First();
+            dekanat.Remove(student_remove);
 
             var dekanat2 = new Dekanat();
             dekanat2.LoadFromFile(students_data_file);
