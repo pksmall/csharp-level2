@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using AsteroidGame.VisualObjects.Interfaces;
+using AsteroidGame.Events;
+using System.IO;
 
 namespace AsteroidGame
 {
@@ -11,6 +13,7 @@ namespace AsteroidGame
     {
         // <summary>drawing timeout</summary>
         private const int __FrameTimeOut = 10;
+        private const string _logFile = "debug.log";
 
         private static BufferedGraphicsContext __Context;
         private static BufferedGraphics __Buffer;
@@ -27,6 +30,10 @@ namespace AsteroidGame
         private const int asteroids_size = 40;
         private const int asteroids_max_speed = 10;
 
+        private const int medkit_count = 15;
+        private const int medkit_size = 25;
+        private const int medkit_max_speed = 5;
+
         //static Game()
         //{
 
@@ -34,8 +41,22 @@ namespace AsteroidGame
 
         public static void Initialize(Form form)
         {
+
             Width = form.Width;
             Height = form.Height;
+
+            const int max_width = 1000;
+            const int max_height = 1000;
+            const int min_width = 136;
+            const int min_heigth = 39;
+            try
+            {
+                if (Width > max_width || Width <= min_width || Height > max_height || Height <= min_heigth)
+                {
+                    throw new ArgumentOutOfRangeException($"Width and/or Height out of range. {Width}x{Height}");
+                }
+            }
+            finally { }
 
             form.BackgroundImage = Properties.Resources.im3;
             __Context = BufferedGraphicsManager.Current;
@@ -82,11 +103,17 @@ namespace AsteroidGame
         private static Bullet __Bullet;
         private static SpaceShip __Ship;
 
+        /// <summary>
+        /// Load main scene
+        /// </summary>
+        /// 
         public static void Load()
         {
             var game_objects = new List<VisualObject>();
             var rnd = new Random();
 
+
+            // stars
             const int stars_count = 150;
             const int star_size = 5;
             const int star_max_speed = 20;
@@ -96,11 +123,19 @@ namespace AsteroidGame
                     new Point(-rnd.Next(0, star_max_speed), 0),
                     star_size));
 
+            // asteroids
             for (var i = 0; i < asteroids_count; i++)
                 game_objects.Add(new Asteroid(
                     new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
                     new Point(-rnd.Next(1, asteroids_max_speed), 0),
                     asteroids_size));
+
+            // medkit
+            for (var i = 0; i < medkit_count; i++)
+                game_objects.Add(new Medkit(
+                    new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
+                    new Point(-rnd.Next(2, medkit_max_speed), 0),
+                    medkit_size));
 
             /*Image image = Properties.Resources.Asteroid;
             var image_object = new ImageObject(new Point(0, 5), new Point(5, 6), new Size(70, 70), image);*/
@@ -109,6 +144,16 @@ namespace AsteroidGame
             __Bullet = new Bullet(200);
             __Ship = new SpaceShip(new Point(10, 400), new Point(5, 5), new Size(10, 10));
             __Ship.ShipDestroyed += OnShipDestroyed;
+            __Ship.ShipOnState += OnShipOnState;
+        }
+
+        private static void OnShipOnState(object sender, StateEvents e)
+        {
+            Console.WriteLine(e.message);
+            using (StreamWriter sw = new StreamWriter(_logFile, true, System.Text.Encoding.Default))
+            {
+                sw.WriteLine(e.message);
+            }
         }
 
         private static void OnShipDestroyed(object sender, EventArgs e)
@@ -147,7 +192,7 @@ namespace AsteroidGame
 
             __Bullet?.Draw(g);
 
-            g.DrawString($"Energy: {__Ship.Energy}",
+            g.DrawString($"Energy: {__Ship.Energy} Score: {__Ship.Score}",
                 new Font(FontFamily.GenericSerif, 14, FontStyle.Italic),
                 Brushes.White, 10, 10);
             __Buffer.Render();
@@ -156,20 +201,6 @@ namespace AsteroidGame
 
         public static void Update()
         {
-
-            const int max_width = 1000;
-            const int max_height = 1000;
-            const int min_width = 136;
-            const int min_heigth = 39;
-            try
-            {
-                if (Width > max_width || Width <= min_width || Height > max_height || Height <= min_heigth)
-                {
-                    throw new ArgumentOutOfRangeException($"Width and/or Height out of range. {Width}x{Height}");
-                }
-            }
-            finally { }
-
             foreach (var visual_object in __GameObjects)
                 visual_object?.Update();
 
@@ -187,12 +218,22 @@ namespace AsteroidGame
 
                     if (__Bullet != null && __Bullet.CheckCollision(collision_object))
                     {
-                        __Bullet = null;
                         //__Bullet = new Bullet(new Random().Next(Width));
-                        __GameObjects[i] = new Asteroid(
-                                               new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
-                                               new Point(-rnd.Next(1, asteroids_max_speed), 0),
-                                               asteroids_size);
+                        __Bullet = null;
+                        if (__GameObjects[i] is Asteroid)
+                        {
+                            __GameObjects[i] = new Asteroid(
+                                                   new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
+                                                   new Point(-rnd.Next(1, asteroids_max_speed), 0),
+                                                   asteroids_size);
+                            __Ship.Score++;
+
+                        }
+                        else
+                        {
+                            __GameObjects[i] = null;
+                            __Ship.Score--;
+                        }
 
                         //MessageBox.Show("Astroid has been destroyed.", "Collision", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }

@@ -85,6 +85,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\StateEvents.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="VisualObjects\Asteroid.cs" />
     <Compile Include="VisualObjects\Bullet.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisualObjects\Interfaces\ICollision.cs" />
+    <Compile Include="VisualObjects\Medkit.cs" />
     <Compile Include="VisualObjects\SpaceShip.cs" />
     <Compile Include="VisualObjects\Star.cs" />
     <Compile Include="VisualObjects\VisualObject.cs" />
@@ -138,6 +140,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\asteroid.png" />
+    <Content Include="src\medkit.jpg" />
+    <None Include="src\medkit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

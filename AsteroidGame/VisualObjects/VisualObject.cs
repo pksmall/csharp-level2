@@ -2,6 +2,8 @@
 
 namespace AsteroidGame.VisualObjects
 {
+    public delegate void stringMessage(string msg);
+
     public abstract class VisualObject
     {
         protected Point _Position;

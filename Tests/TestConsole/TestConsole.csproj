@@ -43,9 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Employeer.cs" />
     <Compile Include="Extensions\RandomExtension.cs" />
-    <Compile Include="FixedEmployee.cs" />
     <Compile Include="Gamer.cs" />
     <Compile Include="IClonebale.cs" />
     <Compile Include="Loggers\DebugLogger.cs" />
@@ -60,7 +58,6 @@
     <Compile Include="SpaceShip.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="Student.cs" />
-    <Compile Include="TimeEmployee.cs" />
     <Compile Include="Vector2D.cs" />
   </ItemGroup>
   <ItemGroup>

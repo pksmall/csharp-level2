@@ -17,8 +17,29 @@ namespace EmployeeTest
             _Age = age;
         }
 
-        public string GetName() => _Name;
-        public string GetAge() => _Age;
+        public string Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                _Name = value;
+            }
+        }
+
+        public string Age
+        {
+            get
+            {
+                return _Age;
+            }
+            set
+            {
+                _Age = value;
+            }
+        }
 
         public abstract decimal CalulateSallay();
 
