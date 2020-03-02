@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using AsteroidGame.VisualObjects.Interfaces;
 using AsteroidGame.Events;
 using System.IO;
+using System.Linq;
 
 namespace AsteroidGame
 {
@@ -26,13 +27,17 @@ namespace AsteroidGame
 
         private static List<Bitmap> lisimage = new List<Bitmap>();
 
-        private const int asteroids_count = 25;
+        private const int asteroids_count = 3;
         private const int asteroids_size = 40;
         private const int asteroids_max_speed = 10;
 
-        private const int medkit_count = 15;
+        private const int medkit_count = 1;
         private const int medkit_size = 25;
         private const int medkit_max_speed = 5;
+
+        private static int current_medkit_count { get; set; } = 0;
+        private static int current_asteroids_count { get; set; } = 0;
+        private static int number_of_asteroids { get; set; } = asteroids_count;
 
         //static Game()
         //{
@@ -82,7 +87,8 @@ namespace AsteroidGame
             switch (e.KeyCode)
             {
                 case Keys.Space:
-                    __Bullet = new Bullet(__Ship.Position.Y);
+                    //__Bullet = new Bullet(__Ship.Position.Y);
+                    __Bullets.Add(new Bullet(__Ship.Position.Y));
                     break;
                 case Keys.Up:
                     __Ship.MoveUp();
@@ -100,9 +106,37 @@ namespace AsteroidGame
         }
 
         private static VisualObject[] __GameObjects;
-        private static Bullet __Bullet;
+        //private static Bullet __Bullet;
+        private static List<Bullet> __Bullets;
         private static SpaceShip __Ship;
 
+
+        private static Random __rnd = new Random();
+
+        private static List<VisualObject> CreateAsteroids(int count)
+        {
+            // asteroids
+            List<VisualObject> obj = new List<VisualObject>();
+            for (var i = 0; i < count; i++)
+                obj.Add(new Asteroid(
+                    new Point(__rnd.Next(0, Width-10), __rnd.Next(0, Height-10)),
+                    new Point(-__rnd.Next(1, asteroids_max_speed), 0),
+                    asteroids_size));
+            current_asteroids_count = count;
+            return obj;
+        }
+
+        private static List<VisualObject> CreateMedKit(int count)
+        {
+            List<VisualObject> obj = new List<VisualObject>();
+            for (var i = 0; i < medkit_count; i++)
+                obj.Add(new Medkit(
+                    new Point(__rnd.Next(0, Width-10), __rnd.Next(0, Height-10)),
+                    new Point(-__rnd.Next(2, medkit_max_speed), 0),
+                    medkit_size));
+            current_medkit_count = count;
+            return obj;
+        }
         /// <summary>
         /// Load main scene
         /// </summary>
@@ -124,24 +158,17 @@ namespace AsteroidGame
                     star_size));
 
             // asteroids
-            for (var i = 0; i < asteroids_count; i++)
-                game_objects.Add(new Asteroid(
-                    new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
-                    new Point(-rnd.Next(1, asteroids_max_speed), 0),
-                    asteroids_size));
+            game_objects.AddRange(CreateAsteroids(asteroids_count));
 
             // medkit
-            for (var i = 0; i < medkit_count; i++)
-                game_objects.Add(new Medkit(
-                    new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
-                    new Point(-rnd.Next(2, medkit_max_speed), 0),
-                    medkit_size));
+            game_objects.AddRange(CreateMedKit(medkit_count));
 
             /*Image image = Properties.Resources.Asteroid;
             var image_object = new ImageObject(new Point(0, 5), new Point(5, 6), new Size(70, 70), image);*/
 
             __GameObjects = game_objects.ToArray();
-            __Bullet = new Bullet(200);
+            //__Bullet = new Bullet(200);
+            __Bullets = new List<Bullet>();
             __Ship = new SpaceShip(new Point(10, 400), new Point(5, 5), new Size(10, 10));
             __Ship.ShipDestroyed += OnShipDestroyed;
             __Ship.ShipOnState += OnShipOnState;
@@ -186,11 +213,18 @@ namespace AsteroidGame
  *          g.FillEllipse(Brushes.Red, new Rectangle(100, 50, 70, 120));
 */
             foreach (var visual_object in __GameObjects)
+            {
                 visual_object?.Draw(g);
+            }
+
+            //__Bullet?.Draw(g);
+            foreach (var bullet in __Bullets)
+            {
+                bullet.Draw(g);
+            }
 
             __Ship.Draw(g);
 
-            __Bullet?.Draw(g);
 
             g.DrawString($"Energy: {__Ship.Energy} Score: {__Ship.Score}",
                 new Font(FontFamily.GenericSerif, 14, FontStyle.Italic),
@@ -204,7 +238,16 @@ namespace AsteroidGame
             foreach (var visual_object in __GameObjects)
                 visual_object?.Update();
 
-            __Bullet?.Update();
+            //__Bullet?.Update();
+            var bullets_to_remove = new List<Bullet>();
+            foreach (var bullet in __Bullets)
+            {
+                bullet.Update();
+                if (bullet.Position.X > Width)
+                {
+                    bullets_to_remove.Add(bullet);
+                }
+             }
 
             var rnd = new Random();
             for(var i = 0; i < __GameObjects.Length; i++)
@@ -216,28 +259,66 @@ namespace AsteroidGame
                     var collision_object = (ICollision)obj;
                     __Ship.CheckCollision(collision_object);
 
-                    if (__Bullet != null && __Bullet.CheckCollision(collision_object))
+                    foreach(var bullet in __Bullets.ToArray())
                     {
-                        //__Bullet = new Bullet(new Random().Next(Width));
-                        __Bullet = null;
-                        if (__GameObjects[i] is Asteroid)
-                        {
-                            __GameObjects[i] = new Asteroid(
-                                                   new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
-                                                   new Point(-rnd.Next(1, asteroids_max_speed), 0),
-                                                   asteroids_size);
-                            __Ship.Score++;
-
-                        }
-                        else
-                        {
+                        if (bullet.CheckCollision(collision_object)) {
+                            bullets_to_remove.Add(bullet);
+                            if (__GameObjects[i] is Asteroid)
+                            {
+                                __Ship.Score++;
+                                number_of_asteroids--;
+                                Console.WriteLine("A: {0}", number_of_asteroids);
+                            }
+                            else
+                            {
+                                // medkit
+                                __Ship.Score--;
+                                current_medkit_count--;
+                            }
                             __GameObjects[i] = null;
-                            __Ship.Score--;
                         }
-
-                        //MessageBox.Show("Astroid has been destroyed.", "Collision", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
+
+                    //if (__Bullets.Any(b => b.CheckCollision(collision_object))) {
+                    //}
+                    //foreach (var bullet in __Bullets.Where(b => b.CheckCollision(collision_object)))
+                    //{
+                    //    __Bullets.Remove(bullet);
+                    //}
+
+                    //MessageBox.Show("Astroid has been destroyed.", "Collision", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
+            }
+
+            foreach (var bullet in bullets_to_remove)
+            {
+                __Bullets.Remove(bullet);
+            }
+
+            if (number_of_asteroids == 0)
+            {
+                List<VisualObject> game_object = new List<VisualObject>();
+                
+                Console.WriteLine("N:{0} A:{1} M:{2}", 
+                    number_of_asteroids, current_asteroids_count, current_medkit_count);
+
+                current_asteroids_count++;
+                number_of_asteroids = current_asteroids_count;
+
+                Console.WriteLine("N:{0} A:{1} M:{2}", 
+                    number_of_asteroids, current_asteroids_count, current_medkit_count);
+
+                game_object.AddRange(CreateAsteroids(current_asteroids_count));
+                if (current_medkit_count > 0)
+                {
+                    game_object.AddRange(CreateMedKit(current_medkit_count));
+                } else
+                {
+                    game_object.AddRange(CreateMedKit(Math.Abs(current_asteroids_count / 3)));
+                }
+
+                __GameObjects = null;
+                __GameObjects = game_object.ToArray();
             }
         }
     }

@@ -1,6 +1,31 @@
 # csharp-level2
 ## C# level2 course from GeekBrains
 
+## lesson04 branch homework04
+1. Добавить в программу коллекцию астероидов. Как только она заканчивается (все астероиды сбиты), формируется новая коллекция, в которой на 1 астероид больше.
+2. Дана коллекция `List<T>`, требуется подсчитать, сколько раз каждый элемент встречается в данной коллекции:
+ - а) для целых чисел;
+ - б) *для обобщенной коллекции;
+ - в) *используя Linq.
+3. *Дан фрагмент программы:
+```csharp
+Dictionary<string, int> dict = new Dictionary<string, int>()
+  {
+    {"four",4 },
+    {"two",2 },
+    { "one",1 },
+    {"three",3 },
+  };
+var d = dict.OrderBy(delegate(KeyValuePair<string,int> pair) { return pair.Value; });
+foreach (var pair in d)
+{
+    Console.WriteLine("{0} - {1}", pair.Key, pair.Value);
+}        
+```
+- а) Свернуть обращение к OrderBy с использованием лямбда-выражения $.
+- б) *Развернуть обращение к OrderBy с использованием делегата Predicate<T>.
+
+
 ## lesson03 branch homework03
 1. Добавить космический корабль, как описано в уроке.
 2. Добработать игру «Астероиды».
