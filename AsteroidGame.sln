@@ -9,11 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8413083C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "Tests\TestConsole\TestConsole.csproj", "{EB39D9B6-CBBC-4908-8C66-574291735B72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeTest", "EmployeeTest\EmployeeTest.csproj", "{219F3D29-1B30-4BF5-9BC7-669602275315}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeTest", "Tests\EmployeeTest\EmployeeTest.csproj", "{219F3D29-1B30-4BF5-9BC7-669602275315}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListTest", "ListTest\ListTest.csproj", "{1D10F733-270D-4BC6-9704-FB92CDAD620C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListTest", "Tests\ListTest\ListTest.csproj", "{1D10F733-270D-4BC6-9704-FB92CDAD620C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PredicateTest", "PredicateTest\PredicateTest.csproj", "{CA198CF0-D596-4817-8C05-323A2008BDC6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PredicateTest", "Tests\PredicateTest\PredicateTest.csproj", "{CA198CF0-D596-4817-8C05-323A2008BDC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
