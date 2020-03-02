@@ -118,10 +118,17 @@ namespace AsteroidGame
             // asteroids
             List<VisualObject> obj = new List<VisualObject>();
             for (var i = 0; i < count; i++)
+            {
+                var speed = new Point(-__rnd.Next(2, asteroids_max_speed), 0);
                 obj.Add(new Asteroid(
-                    new Point(__rnd.Next(0, Width-10), __rnd.Next(0, Height-10)),
-                    new Point(-__rnd.Next(1, asteroids_max_speed), 0),
+                    new Point(__rnd.Next(136, Width), __rnd.Next(39, Height)),
+                    speed,
                     asteroids_size));
+                //Asteroid ast = (Asteroid) obj[i];
+                //Console.WriteLine("WxH: {0} {1}  SP: {2} {3}", 
+                //    ast.Position.X, ast.Position.Y,
+                //    speed.X, speed.Y);
+            }
             current_asteroids_count = count;
             return obj;
         }
@@ -131,12 +138,13 @@ namespace AsteroidGame
             List<VisualObject> obj = new List<VisualObject>();
             for (var i = 0; i < medkit_count; i++)
                 obj.Add(new Medkit(
-                    new Point(__rnd.Next(0, Width-10), __rnd.Next(0, Height-10)),
+                    new Point(__rnd.Next(136, Width), __rnd.Next(36, Height)),
                     new Point(-__rnd.Next(2, medkit_max_speed), 0),
                     medkit_size));
             current_medkit_count = count;
             return obj;
         }
+
         /// <summary>
         /// Load main scene
         /// </summary>
@@ -144,8 +152,6 @@ namespace AsteroidGame
         public static void Load()
         {
             var game_objects = new List<VisualObject>();
-            var rnd = new Random();
-
 
             // stars
             const int stars_count = 150;
@@ -153,8 +159,8 @@ namespace AsteroidGame
             const int star_max_speed = 20;
             for (var i = 0; i < stars_count; i++)
                 game_objects.Add(new Star(
-                    new Point(rnd.Next(0, Width),rnd.Next(0, Height)),
-                    new Point(-rnd.Next(0, star_max_speed), 0),
+                    new Point(__rnd.Next(0, Width),__rnd.Next(0, Height)),
+                    new Point(-__rnd.Next(0, star_max_speed), 0),
                     star_size));
 
             // asteroids
@@ -162,9 +168,6 @@ namespace AsteroidGame
 
             // medkit
             game_objects.AddRange(CreateMedKit(medkit_count));
-
-            /*Image image = Properties.Resources.Asteroid;
-            var image_object = new ImageObject(new Point(0, 5), new Point(5, 6), new Size(70, 70), image);*/
 
             __GameObjects = game_objects.ToArray();
             //__Bullet = new Bullet(200);
