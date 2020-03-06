@@ -30,14 +30,14 @@ namespace EmployeeTest
 
             foreach(Employee item in employees)
             {
-                Console.WriteLine("{0, -11} {0, -3} {1:f2}", item.GetName(), item.GetAge(),  item.CalulateSallay());
+                Console.WriteLine("{0, -11} {0, -3} {1:f2}", item.Name, item.Age,  item.CalulateSallay());
             }
 
             Array.Sort<Employee>(employees);
 
             foreach (Employee item in employees)
             {
-                Console.WriteLine("{0, -11} {0, -3} {1:f2}", item.GetName(), item.GetAge(), item.CalulateSallay());
+                Console.WriteLine("{0, -11} {0, -3} {1:f2}", item.Name, item.Age, item.CalulateSallay());
             }
 
             Console.ReadKey();
