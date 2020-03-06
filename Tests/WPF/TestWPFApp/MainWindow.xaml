@@ -7,6 +7,34 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Button Content="Button" Margin="0,0,625.286,322.714" RenderTransformOrigin="0.002,-0.75" Height="38" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="121"/>
+        <Button Content="AnimButton" Height="36" Width="120" 
+                HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                RenderTransformOrigin="0.5,0.5" Margin="0,0,333.286,220.714">
+            <Button.RenderTransform>
+                <RotateTransform Angle="0" x:Name="RotateTransform"/>
+            </Button.RenderTransform>
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                 From="1" 
+                                                 To="0" 
+                                                 Duration="0:0:3"
+                                                 AutoReverse="True"/>
+                                <DoubleAnimation Storyboard.TargetName="RotateTransform"
+                                    Storyboard.TargetProperty="Angle" 
+                                            From="0" 
+                                            To="360" 
+                                            Duration="0:0:3"
+                                            AutoReverse="True"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
     </Grid>
 </Window>
