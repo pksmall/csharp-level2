@@ -49,11 +49,7 @@ namespace AsteroidGame.VisualObjects
 
         protected virtual void OnShipState(StateEvents e) 
         {
-            EventHandler<StateEvents> handler = ShipOnState;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            ShipOnState?.Invoke(this, e);
         }
 
         public void ChangeEnergy(int delta)
