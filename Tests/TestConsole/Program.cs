@@ -9,148 +9,107 @@ namespace TestConsole
 {
     static class Program
     {
-        private static List<int> GetRandomRatings(Random rnd, int countMin, int countMax)
-        {
-            var count = rnd.Next(countMin, countMax + 1);
-            var result = new List<int>(count);
-
-            for (var i = 0; i < count; i++)
-            {
-                result.Add(rnd.Next(1, 13));
-            }
-
-            return result;
-        }
-
-        private static void OnStudentAdd(Student student)
-        {
-            Console.WriteLine("Student {0} added", student.Name);
-        }
-        private static void OnStudentRemove(Student student)
-        {
-            Console.WriteLine("Student {0} removed", student.Name);
-        }
-
-        private static void GoToArmy(Student student)
-        {
-            Console.WriteLine("Student {0} go to the army", student.Name);
-        }
         static void Main(string[] args)
         {
-            var dekanat = new Dekanat();
-            //dekanat.SubscribeToAdd(OnStudentAdd);
-            dekanat.SubscribeToRemove(OnStudentRemove);
-            dekanat.SubscribeToRemove(GoToArmy);
-            //dekanat.SubscribeToAdd(std => Console.WriteLine("Congratulations again to the student.")); 
-            
-            dekanat.NewItemAdded += OnStudentAdd;
-            dekanat.ExelentStudentAdded += exelent_student => Console.WriteLine("!!! {0} !!!", exelent_student); ;
+            /*var sArrayList = new ArrayList();
 
-            var rnd = new Random();
-            for (var i = 0; i < 100; i++)
+            sArrayList.Add(42);
+            sArrayList.Add(new object());
+            sArrayList.Add(3.141592);
+            sArrayList.Add("hELLOWorld");
+
+            for(var i = 0; i <sArrayList.Count; i++)
             {
-                dekanat.Add(new Student
+                var value = sArrayList[i];
+                if (value is int)
                 {
-                    Name = $"Student {i + 1}",
-                    Ratings = rnd.GetRandomIntValues(20, 1, 13).ToList()   //GetRandomRatings(rnd, 20, 50)
-                }) ;
+                    Console.WriteLine("Int: {0}", (int)value);
+                } else if (value is string)
+                {
+                    Console.WriteLine("Str: {0}", (string)value);
+                } else if (value is double)
+                {
+                    Console.WriteLine("Dbl: {0}", (double)value);
+                }
+            }*/
+
+            List<Student> students = new List<Student>();
+            students.Capacity = 90;
+
+            for (var i = 0; i < 45; i++)
+            {
+                students.Add(new Student());
             }
 
-            const string students_data_file = "student.csv";
-            dekanat.SaveToFile(students_data_file);
+            var student_to_add = new Student[20];
+            for (var i = 0; i < student_to_add.Length; i++)
+            {
+                student_to_add[i] = new Student();
+            }
+            students.AddRange(student_to_add);
+
+            students.Capacity = students.Count;
+
+            var nsList = new List<Student>(student_to_add);
+            students.RemoveAt(5);
+            var numList = new List<int>(1000);
+            for (var i = 0; i < numList.Capacity; i++)
+            {
+                numList.Add(i + 72);
+            }
+            var vIdex = numList.BinarySearch(712);
+
+            var strList = new List<string>(1000);
+            for (var i = 0; i < numList.Capacity; i++)
+            {
+                strList.Add($"Message {i + 21}");
+            }
+            strList.Sort((s1, s2) => StringComparer.Ordinal.Compare(s2, s1));
+
+            var sIdex = strList.BinarySearch("Message 712");
+
+            //var sArray = strList.ToArray():
+            var sArray = new string[strList.Count];
+            strList.CopyTo(sArray, 0);
+
+            //strList.ForEach(PrintString);
+
+            //const string dDirName = "../../";
+            //var tLines = DataDirectoryProcessor.GetTotalLinesCountStack(dDirName);
+            //var tLines = DataDirectoryProcessor.GetTotalLinesCountQueue(dDirName);
+            //Console.WriteLine("Total number: {0}", tLines);
+
+            var tString = new string[] { "Hello world!", "123", "1231QWEWE-" };
+
+            Dictionary<string, int> strIntDict = new Dictionary<string, int>();
+            strIntDict.Add("ASD", 1024);
+            for(var i = 0; i < tString.Length; i++)
+            {
+                strIntDict.Add(tString[i], tString[i].Length);
+            }
+            foreach(KeyValuePair<string, int> value in strIntDict)
+            {
+                Console.WriteLine("{0} -- {1}", value.Key, value.Value);
+            }
+
+            strIntDict.Remove("123");
+
+            int str_123_len3;
+            if (strIntDict.TryGetValue("123", out str_123_len3))
+            {
+                Console.WriteLine(str_123_len3);
+            }
+            strIntDict["123"] = 123;
+            if (strIntDict.TryGetValue("123", out str_123_len3))
+            {
+                Console.WriteLine(str_123_len3);
+            }
+
+            StudentsTest.Run();
 
             Console.ReadKey();
-
-            var student_remove = dekanat.Skip(45).First();
-            dekanat.Remove(student_remove);
-
-            var dekanat2 = new Dekanat();
-            dekanat2.LoadFromFile(students_data_file);
-
-            foreach (var std in dekanat2)
-            {
-                //Console.WriteLine(std);
-            }
-
-            var avg_rating = dekanat2.Average(s => s.AvgRating);
-            var sum_avg_rating = dekanat2.Sum(s => s.AvgRating);
-            Console.WriteLine($"{avg_rating:0.##} {sum_avg_rating:0.##}");
-
-            var rnd_student_name = rnd.NextValue("Ivanov", "Petrov", "Sidorov");
-            var random_rating = rnd.NextValue(2, 3, 4, 5);
-
-            /*  
-                StudentProcessor processor = new StudentProcessor(GetIndexedStudentName);
-                StudentProcessor processor = GetIndexedStudentName;
-
-                var index = 0;
-                foreach(var s in dekanat2)
-                {
-                    Console.WriteLine(processor(s, index++));
-                }
-
-                Console.ReadKey();
-
-                processor = GetAvgStudentRating;
-                index = 0;
-                foreach (var s in dekanat2)
-                {
-                    Console.WriteLine(processor(s, index++));
-                }
-            */
-
-            /*      
-                ProcessStudents(dekanat2, GetIndexedStudentName);
-                Console.ReadKey();
-                ProcessStudents(dekanat2, GetAvgStudentRating);
-            */
-            //ProcessStudentsStandard(dekanat2, PrintStudent);
-
-            var metrics = GetStudentsMetrics(dekanat2, std => std.Name.Length + (int)(std.AvgRating * 10));
-            Console.ReadKey();
         }
 
-        private static void PrintStudent(Student student)
-        {
-            Console.WriteLine("Student: {0}", student.Name);
-        }
-
-        public static void ProcessStudentsStandard(IEnumerable<Student> students, Action<Student> action)
-        {
-            foreach (var s in students)
-            {
-                action(s);
-            }
-        }
-
-        public static int[] GetStudentsMetrics(IEnumerable<Student> student, Func<Student, int> GetMetrics)
-        {
-            var result = new List<int>();
-            foreach(var cstd in student)
-            {
-                result.Add(GetMetrics(cstd));
-            }
-            return result.ToArray();
-        }
-
-        public static void ProcessStudents(IEnumerable<Student> students, StudentProcessor processor)
-        {
-            var index = 0;
-            foreach (var s in students)
-            {
-                Console.WriteLine(processor(s, index++));
-            }
-        }
-        private static string GetIndexedStudentName(Student student, int index)
-        {
-            return $"{student.Name}[{index}]";
-        }
-
-        public static string GetAvgStudentRating(Student student, int index)
-        {
-            return $"[{index}]:{student.Name} - {student.AvgRating}";
-        }
+        private static void PrintString(string str) => Console.WriteLine("Str = " + str);
     }
-
-    internal delegate string StudentProcessor(Student student, int index);
 }

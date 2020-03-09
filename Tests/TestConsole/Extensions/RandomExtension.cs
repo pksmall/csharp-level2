@@ -19,5 +19,6 @@ namespace TestConsole.Extensions
         {
             return Variants[rnd.Next(0, Variants.Length)];
         }
+
     }
 }

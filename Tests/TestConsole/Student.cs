@@ -8,7 +8,11 @@ namespace TestConsole
 {
     class Student : IComparable<Student>, IEquatable<Student>, IEquatable<string>, ICloneable<Student>
     {
-        public string Name { get; set; }
+        public int Id { get; set; }
+        public int GroupId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Patronimyc { get; set; }
         public List<int> Ratings { get; set; } = new List<int>();
 
         public double AvgRating
@@ -46,7 +50,7 @@ namespace TestConsole
         {
             return new Student
             {
-                Name = Name,
+                FirstName = FirstName,
                 Ratings = new List<int>(Ratings)
             };
         }
@@ -77,7 +81,7 @@ namespace TestConsole
 
         public bool Equals(Student other)
         {
-            return other?.Name == Name;
+            return other?.FirstName == FirstName;
             //return (other == null ? null : other.Name) == Name;
             //if (other is null)
             //    return null;
@@ -87,9 +91,9 @@ namespace TestConsole
 
         public bool Equals(string other)
         {
-            return Name == other;
+            return FirstName == other;
         }
 
-        public override string ToString() => $"{Name}: {AvgRating:0.##}";
+        public override string ToString() => $"[{Id} {LastName} {FirstName} ({GroupId}): {AvgRating:0.##}";
     }
 }
