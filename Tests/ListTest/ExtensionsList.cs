@@ -11,14 +11,7 @@ namespace ListTest
             foreach (T i in self)
             {
                 bool contains = false;
-                foreach (var p in uniqDictionary.Keys)
-                {
-                    if (p.Equals(i))
-                    {
-                        contains = true;
-                        break;
-                    }
-                }
+                contains  = uniqDictionary.ContainsKey(i);
 
                 if (contains)
                 {
