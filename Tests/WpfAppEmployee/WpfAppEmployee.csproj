@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7737032D-E20E-449D-9048-6512F801F0B5}</ProjectGuid>
+    <ProjectGuid>{5A472CE5-22F7-4D3E-ADAB-955CEAA6EAC4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>TestWPFApp</RootNamespace>
-    <AssemblyName>TestWPFApp</AssemblyName>
+    <RootNamespace>WpfAppEmployee</RootNamespace>
+    <AssemblyName>WpfAppEmployee</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -55,9 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="TestWindow.xaml.cs">
-      <DependentUpon>TestWindow.xaml</DependentUpon>
-    </Compile>
+    <Page Include="EditDepartament.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -66,27 +67,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EditDepartament.xaml.cs">
+      <DependentUpon>EditDepartament.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Employee\Department.cs" />
+    <Compile Include="Employee\Employeer.cs" />
+    <Compile Include="Employee\FixedEmployee.cs" />
+    <Compile Include="Employee\TimeEmployee.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MainWindow2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\Buttons.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TestWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainWindow2.xaml.cs">
-      <DependentUpon>MainWindow2.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -111,11 +104,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="src\asteroid.png" />
-    <Resource Include="src\medkit.jpg" />
-    <Resource Include="src\medkit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

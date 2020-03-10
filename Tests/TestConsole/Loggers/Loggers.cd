@@ -32,10 +32,9 @@
   <Class Name="TestConsole.Loggers.TraceLogger">
     <Position X="0.5" Y="3.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Loggers\TraceLogger.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="TestConsole.Loggers.VisualStudioOutputLogger">
     <Position X="2.75" Y="3.75" Width="2" />
