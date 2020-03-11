@@ -1,12 +1,23 @@
-﻿using System;
+﻿using MVVMTestApp.ViewModels.Base;
+using System;
 using System.Timers;
 
 namespace MVVMTestApp.ViewModels
 {
-    class MainWindowNewModel
+    class MainWindowNewModel : ViewModel
     {
         private Timer _Timer;
-        public DateTime CurrentTime { get; set; }
+        private DateTime _CurrentTime;
+
+        public DateTime CurrentTime { 
+            get => _CurrentTime;
+            set
+            {
+                if (Equals(_CurrentTime, value)) return;
+                _CurrentTime = value;
+                OnPropertyChanged();
+            }
+        }
         public string Title { get; set; } = "Title windows MVVM App";
         public MainWindowNewModel()
         {
