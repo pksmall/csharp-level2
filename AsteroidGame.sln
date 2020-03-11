@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BindingTestApp", "Tests\Bin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeesManager", "Tests\BindingTest\EmployeesManager\EmployeesManager.csproj", "{DDD2C120-EAEF-45C2-B788-BAFE99FFA89E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMTestApp", "Tests\MVVMTestApp\MVVMTestApp.csproj", "{AFFCB340-6072-41C3-91E0-F3772D4245BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,14 @@ Global
 		{DDD2C120-EAEF-45C2-B788-BAFE99FFA89E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DDD2C120-EAEF-45C2-B788-BAFE99FFA89E}.Release|x64.ActiveCfg = Release|Any CPU
 		{DDD2C120-EAEF-45C2-B788-BAFE99FFA89E}.Release|x64.Build.0 = Release|Any CPU
+		{AFFCB340-6072-41C3-91E0-F3772D4245BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFFCB340-6072-41C3-91E0-F3772D4245BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFFCB340-6072-41C3-91E0-F3772D4245BA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AFFCB340-6072-41C3-91E0-F3772D4245BA}.Debug|x64.Build.0 = Debug|Any CPU
+		{AFFCB340-6072-41C3-91E0-F3772D4245BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFFCB340-6072-41C3-91E0-F3772D4245BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFFCB340-6072-41C3-91E0-F3772D4245BA}.Release|x64.ActiveCfg = Release|Any CPU
+		{AFFCB340-6072-41C3-91E0-F3772D4245BA}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,6 +143,7 @@ Global
 		{405DF3B5-C38B-4305-9303-53C7C3C295AE} = {8413083C-252D-4854-866F-EAD34CF742FF}
 		{521AE56E-0948-4824-9E1F-505B2A76B69A} = {405DF3B5-C38B-4305-9303-53C7C3C295AE}
 		{DDD2C120-EAEF-45C2-B788-BAFE99FFA89E} = {405DF3B5-C38B-4305-9303-53C7C3C295AE}
+		{AFFCB340-6072-41C3-91E0-F3772D4245BA} = {8413083C-252D-4854-866F-EAD34CF742FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6043DD78-6ED9-462E-A0B8-FA8E9F669E20}
