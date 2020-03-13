@@ -1,11 +1,12 @@
 ﻿<Window x:Class="WpfAppEmployee.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfAppEmployee"
         xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
-        mc:Ignorable="d"
+        xmlns:data="clr-namespace:WpfAppEmployee.Data"
+        xmlns:models="clr-namespace:WpfAppEmployee.Models"
+        xmlns:local="clr-namespace:WpfAppEmployee"
         Title="MainWindow" Height="480" Width="640">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -45,34 +46,49 @@
         <Button x:Name="AddButton" Content="Add Employee" HorizontalAlignment="Left" Margin="23,36,0,0" Grid.Row="1" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.116,-0.412" Height="27" Cursor="Hand" Grid.ColumnSpan="2" Click="AddButton_Click"/>
         <Button x:Name="AddDepartament" Content="Edit Departaments" Margin="0,36,20.286,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.116,-0.412" Height="27" Cursor="Hand" Grid.Column="2" HorizontalAlignment="Right" Width="110" Click="AddDepartament_Click"/>
         <DataGrid Grid.Row="1" x:Name="employeeGrid" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray" RowBackground="LightGray" 
-                  AlternatingRowBackground="White"  Margin="23,79,20.286,22.714" Grid.ColumnSpan="4" ItemsSource="{Binding employeeList}">
+                  AlternatingRowBackground="White"  Margin="23,79,20.286,22.714" Grid.ColumnSpan="4"
+                  ItemsSource="{x:Static data:TestData.Employees}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ФИО" Binding="{Binding Path=Name}" Width="120">
+                <DataGridTextColumn Header="ФИО" Binding="{Binding Path=Name}" Width="80">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Center" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Возраст" Binding="{Binding Path=Age, StringFormat=D}" Width="60">
+                <DataGridTextColumn Header="ФИО" Binding="{Binding Path=SurName}" Width="80">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding Path=Patronymic}" Width="80">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="true" Header="Возраст" Binding="{Binding Path=Age, StringFormat=D}" Width="30">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Right" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="true" Header="Зарплата" Binding="{Binding Path=Sallary, StringFormat=F}" Width="80">
+                <DataGridTextColumn Header="Зарплата" Binding="{Binding Path=DayOfBirth, ConverterCulture='ru-RU'}" Width="140">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Right" />
+                            <Setter Property="HorizontalAlignment" Value="Center" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTemplateColumn x:Name="Department" Header="Департамент" Width="90">
+                <DataGridTemplateColumn x:Name="Department" Header="Департамент" Width="110">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox ItemsSource="{Binding EmployeeDepartment}" 
-                                      DisplayMemberPath="DepartamentName" 
+                            <ComboBox ItemsSource="{x:Static data:TestData.Departments}" 
+                                      DisplayMemberPath="DepName" 
                                       SelectedValuePath="DepId" 
                                       SelectedValue="{Binding Department, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
