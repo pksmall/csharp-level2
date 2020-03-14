@@ -1,23 +1,24 @@
 ﻿<Window x:Class="WpfAppEmployee.EditDepartament"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfAppEmployee"
-        mc:Ignorable="d"
+        xmlns:data="clr-namespace:WpfAppEmployee.Data"
         Title="EditDepartament" Height="240" Width="330">
     <Grid>
         <DataGrid x:Name="departmentGrid" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray" RowBackground="LightGray" 
-                  AlternatingRowBackground="White" ItemsSource="{Binding departamentList}" Margin="0,45,0.286,0.429">
+                  AlternatingRowBackground="White"  Margin="0,45,0.286,0.429" 
+                  ItemsSource="{x:Static data:TestData.Departments}">
             <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly="true" Header="ID" Binding="{Binding Path=DepId}" Width="60">
+                <DataGridTextColumn Header="ID" Binding="{Binding DepId}" Width="60">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Left" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Название" Binding="{Binding Path=DepartamentName}" Width="110">
+                <DataGridTextColumn Header="Название" Binding="{Binding DepName}" Width="110">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Center" />
